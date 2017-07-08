@@ -1,3 +1,15 @@
+export interface LevelZero {
+  subservices: Array<LevelOne>;
+}
+
+
+export interface LevelOne {
+  service_code: string;
+  service_name: string;
+  subservices: Array<LevelTwo>;
+}
+
+
 export interface LevelTwo {
   service_code: string;
   service_name: string;

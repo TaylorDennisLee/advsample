@@ -1,0 +1,24 @@
+{
+  "subservices": [
+    {
+      "service_code": "B",
+      "service_name": "Basic Needs"
+    },
+    {
+      "service_code": "F",
+      "service_name": "Criminal Justice and Legal Services"
+    },
+    {
+      "service_code": "L",
+      "service_name": "Healthcare"
+    },
+    {
+      "service_code": "N",
+      "service_name": "Income Support and Employment"
+    },
+    {
+      "service_code": "P",
+      "service_name": "Individual and Family Life"
+    }
+  ]
+}
