@@ -15,7 +15,7 @@
 <div class="ui grid">
   <div class="four wide column">
     <sui-accordion class="styled fluid">
-      <ng-template ngFor let-levelone [ngForOf]="top_level.subservices">
+      <ng-template ngFor let-levelone [ngForOf]="(top_level | async)?.subservices">
         <sui-accordion-panel>
           <div title>
             <i class="dropdown icon"></i> {{levelone.service_name}}
@@ -24,9 +24,24 @@
             <div class="ui list middle aligned divided">
               <ng-template ngFor let-leveltwo [ngForOf]="levelone.subservices">
                 <div class="item">
+
+                  <div *ngIf="leveltwo.active" class="left floated content">
+                    <div (click)="levelTwoToggle(leveltwo)" class="circular ui icon button">
+                      <i class="icon checkmark box"></i>
+                    </div>
+                  </div>
+
+                  <div *ngIf="!leveltwo.active" class="left floated content">
+                    <div (click)="levelTwoToggle(leveltwo)" class="circular ui icon button basic">
+                      <i class="icon square outline"></i>
+                    </div>
+                  </div>
+
+
+
+
                   <div class="content">
-                    <a class="header" (click)="topToggle()">{{leveltwo.service_name}}</a>
-                    <div class="description">{{leveltwo.sub_active}} of {{leveltwo.sub_count}}</div>
+                    <a class="header" (click)="switchMid(leveltwo.level_one_index, leveltwo.level_two_index)">{{leveltwo.service_name}}</a>
                   </div>
                 </div>
               </ng-template>
@@ -37,28 +52,28 @@
     </sui-accordion>
   </div>
   <div class="seven wide column">
-    <!--<div class="ui divided list">-->
-      <!--<h3 class="ui header">{{(top_level | async)?.service_name}}</h3>-->
-      <!--<div class="item" *ngFor="let subservice of (top_level | async)?.subservices">-->
+    <div class="ui divided list">
+      <h3 class="ui header">{{(middle_column | async)?.service_name}}</h3>
+      <div class="item" *ngFor="let subservice of (middle_column | async)?.subservices">
 
-        <!--<div *ngIf="subservice.active" class="left floated content">-->
-          <!--<div class="ui black button" (click)="lvlToggle(subservice)">-->
-            <!--Included-->
-          <!--</div>-->
-        <!--</div>-->
+        <div *ngIf="subservice.active" class="left floated content">
+          <div (click)="levelThreeToggle(subservice)" class="circular ui icon button">
+            <i class="icon checkmark box"></i>
+          </div>
+        </div>
 
-        <!--<div *ngIf="!subservice.active" class="left floated content">-->
-          <!--<div class="ui black button basic" (click)="lvlToggle(subservice)">-->
-            <!--Excluded-->
-          <!--</div>-->
-        <!--</div>-->
+        <div *ngIf="!subservice.active" class="left floated content">
+          <div (click)="levelThreeToggle(subservice)" class="circular ui icon button basic">
+            <i class="icon square outline"></i>
+          </div>
+        </div>
 
-        <!--<div class="content">-->
-          <!--<a class="header" (click)="lvlToggle(subservice)">{{subservice.service_name}}</a>-->
-          <!--<div class="description">{{subservice.service_code}}</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
+        <div class="content">
+          <a class="header">{{subservice.service_name}}</a>
+          <div class="description">{{subservice.service_code}}</div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

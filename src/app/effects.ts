@@ -12,19 +12,24 @@ import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 
+import { State } from './reducers';
+import { AdvActions } from './actions';
+import { JsonService } from './json_service';
 
-import { LOAD_SERV_JSON } from './actions';
+
 
 @Injectable()
 export class LoadJsonEffects {
 
   @Effect() fetch$ = this.actions$
-    .ofType(LOAD_SERV_JSON)
-    .switchMap( () =>
-      { console.log("MOOOOO");
-      return Observable.of({type: "SUPER_SIMPLE_EFFECT_HAS_FINISHED"})
-      });
+    .ofType(AdvActions.LOAD_SERV_JSON)
+    .switchMap(() => this.json_service.getTopLevel())
+    .map(top_level => this.adv_actions$.loadServSuccess(top_level));
 
-    constructor(private actions$: Actions) { }
+    constructor(
+      private actions$: Actions,
+      private adv_actions$: AdvActions,
+      private json_service: JsonService
+    ) { }
 
 }

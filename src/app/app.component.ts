@@ -1,15 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { Http } from '@angular/http';
 import { LevelZero, LevelOne, LevelTwo, LevelThree } from './level.model';
 import * as fromReducers from './reducers';
 
-
-import { ADD_LEVEL_2, REMOVE_LEVEL_2, TOGGLE_LEVEL_2,
-          ADD_LEVEL_3, REMOVE_LEVEL_3, TOGGLE_LEVEL_3,
-          LOAD_SERV_JSON, LoadServJsonAction
-} from './actions';
+import { AdvActions } from './actions';
 
 
 @Component({
@@ -19,51 +15,34 @@ import { ADD_LEVEL_2, REMOVE_LEVEL_2, TOGGLE_LEVEL_2,
 })
 
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app';
-  //top_level: Observable<LevelZero>;
-  top_level: LevelZero;
-  top_level_active = false;
-  constructor(private store: Store<fromReducers.State>, private _http: Http) {
-    this.loadDataFromJson().subscribe(x => this.top_level = x);
-    console.log(this.top_level);
-    this.store.dispatch({type: LOAD_SERV_JSON, payload: this.top_level});
-    //this.store.dispatch(new LoadServJsonAction(this.first_data));
-    //this.top_level = this.store.select('level_zero');
-  }
-
-
-  loadDataFromJson() {
-    const url = 'assets/serv-1.json';
-    return this._http.get(url).map(x => <LevelZero>x.json());
-  }
-
-  lvlToggle(levelThreeService: LevelThree)
+  top_level: Observable<LevelZero>;
+  middle_column: Observable<LevelTwo>;
+  constructor(
+    private store: Store<fromReducers.State>,
+    private advActions: AdvActions
+  )
   {
-    this.store.dispatch({type: LOAD_SERV_JSON})
-    if (levelThreeService.active) {
-      this.store.dispatch({type: REMOVE_LEVEL_3});
-    }
-    if (!levelThreeService.active) {
-      this.store.dispatch({type: ADD_LEVEL_3});
-    }
-
-    levelThreeService.active = !levelThreeService.active;
+    this.top_level = this.store.select('level_zero');
+    this.middle_column = this.store.select('middle_column');
   }
 
-  topToggle()
+  ngOnInit() {
+    this.store.dispatch(this.advActions.loadServJson());
+  }
+
+  switchMid(level_one_index: number, level_two_index: number) {
+    this.store.dispatch(this.advActions.switchCenter(level_one_index, level_two_index));
+  }
+
+  levelTwoToggle(toggled_level_two: LevelTwo) {
+    this.store.dispatch(this.advActions.toggleLevelTwo(toggled_level_two.level_one_index, toggled_level_two.level_two_index));
+  }
+
+  levelThreeToggle(toggled_level_three: LevelThree)
   {
-    if (this.top_level_active == true) {
-      console.log("Dispatch: REMOVE_LEVEL_2");
-      this.store.dispatch({type: REMOVE_LEVEL_2});
-      this.top_level_active = false;
-    }
-    else if (this.top_level_active == false) {
-      console.log("Dispatch: ADD_LEVEL_2");
-      this.store.dispatch({type: ADD_LEVEL_2});
-      this.top_level_active = true;
-    }
+    toggled_level_three.active = !toggled_level_three.active;
   }
-
 
 }

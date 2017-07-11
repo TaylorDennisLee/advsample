@@ -12,6 +12,7 @@ import { LoadJsonEffects } from './effects';
 import { AppComponent } from './app.component';
 import { levelZeroReducer } from './reducers';
 
+import { AdvActions } from './actions';
 import { JsonService } from './json_service';
 
 
@@ -27,7 +28,7 @@ import { JsonService } from './json_service';
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     SuiAccordionModule
   ],
-  providers: [JsonService],
+  providers: [JsonService, AdvActions],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
