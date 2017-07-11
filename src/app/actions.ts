@@ -37,4 +37,60 @@ export class AdvActions {
     };
   }
 
+  static TOGGLE_LEVEL_THREE = 'TOGGLE_LEVEL_THREE';
+  toggleLevelThree(level_one, level_two, level_three): Action {
+    return {
+      type: AdvActions.TOGGLE_LEVEL_THREE,
+      payload: {
+        level_one_index : level_one,
+        level_two_index : level_two,
+        level_three_index : level_three
+      }
+    };
+  }
+
+  static ADD_LEVEL_TWO = 'ADD_LEVEL_TWO';
+  addLevelTwo(level_one, level_two): Action {
+    return {
+      type: AdvActions.ADD_LEVEL_TWO,
+      payload: {level_one_index : level_one, level_two_index: level_two}
+    };
+  }
+
+  static ADD_LEVEL_THREE = 'ADD_LEVEL_THREE';
+  addLevelThree(level_one, level_two, level_three): Action {
+    return {
+      type: AdvActions.ADD_LEVEL_THREE,
+      payload: {
+        level_one_index : level_one,
+        level_two_index : level_two,
+        level_three_index : level_three
+      }
+    };
+  }
+
+  static REMOVE_LEVEL_TWO = 'REMOVE_LEVEL_TWO';
+  removeLevelTwo(level_one, level_two): Action {
+    return {
+      type: AdvActions.REMOVE_LEVEL_TWO,
+      payload: {level_one_index : level_one, level_two_index: level_two}
+    };
+  }
+
+  static REMOVE_LEVEL_THREE = 'REMOVE_LEVEL_THREE';
+  removeLevelThree(level_one, level_two, level_three): Action {
+    return {
+      type: AdvActions.REMOVE_LEVEL_THREE,
+      payload: {
+        level_one_index : level_one,
+        level_two_index : level_two,
+        level_three_index : level_three
+      }
+    };
+  }
+
+
+
+
+
 }

@@ -36,13 +36,34 @@ export class AppComponent implements OnInit {
     this.store.dispatch(this.advActions.switchCenter(level_one_index, level_two_index));
   }
 
+  addLevelTwo(level_two: LevelTwo) {
+    this.store.dispatch(this.advActions.addLevelTwo(level_two.level_one_index, level_two.level_two_index));
+  }
+
+  removeLevelTwo(level_two: LevelTwo) {
+    this.store.dispatch(this.advActions.removeLevelTwo(level_two.level_one_index, level_two.level_two_index));
+  }
+
+  addLevelThree(level_three: LevelThree) {
+    this.store.dispatch(this.advActions.addLevelThree(level_three.level_one_index, level_three.level_two_index, level_three.level_three_index));
+  }
+
+  removeLevelThree(level_three: LevelThree) {
+    this.store.dispatch(this.advActions.removeLevelThree(level_three.level_one_index, level_three.level_two_index, level_three.level_three_index));
+  }
+
   levelTwoToggle(toggled_level_two: LevelTwo) {
     this.store.dispatch(this.advActions.toggleLevelTwo(toggled_level_two.level_one_index, toggled_level_two.level_two_index));
   }
 
   levelThreeToggle(toggled_level_three: LevelThree)
   {
-    toggled_level_three.active = !toggled_level_three.active;
+    this.store.dispatch(this.advActions.toggleLevelThree(
+                          toggled_level_three.level_one_index,
+                          toggled_level_three.level_two_index,
+                          toggled_level_three.level_three_index
+                            )
+                       );
   }
 
 }

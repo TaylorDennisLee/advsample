@@ -26,13 +26,13 @@
                 <div class="item">
 
                   <div *ngIf="leveltwo.active" class="left floated content">
-                    <div (click)="levelTwoToggle(leveltwo)" class="circular ui icon button">
+                    <div (click)="removeLevelTwo(leveltwo)" class="circular ui icon button">
                       <i class="icon checkmark box"></i>
                     </div>
                   </div>
 
                   <div *ngIf="!leveltwo.active" class="left floated content">
-                    <div (click)="levelTwoToggle(leveltwo)" class="circular ui icon button basic">
+                    <div (click)="addLevelTwo(leveltwo)" class="circular ui icon button basic">
                       <i class="icon square outline"></i>
                     </div>
                   </div>
@@ -57,13 +57,13 @@
       <div class="item" *ngFor="let subservice of (middle_column | async)?.subservices">
 
         <div *ngIf="subservice.active" class="left floated content">
-          <div (click)="levelThreeToggle(subservice)" class="circular ui icon button">
+          <div (click)="removeLevelThree(subservice)" class="circular ui icon button">
             <i class="icon checkmark box"></i>
           </div>
         </div>
 
         <div *ngIf="!subservice.active" class="left floated content">
-          <div (click)="levelThreeToggle(subservice)" class="circular ui icon button basic">
+          <div (click)="addLevelThree(subservice)" class="circular ui icon button basic">
             <i class="icon square outline"></i>
           </div>
         </div>

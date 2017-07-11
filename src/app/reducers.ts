@@ -36,25 +36,67 @@ export function levelZeroReducer(state = initialState, action: Action ) {
             state.level_zero = action.payload;
             return state;
             }
+
           case AdvActions.SWITCH_CENTER: {
-            let level_one = action.payload.level_one_index;
-            let level_two = action.payload.level_two_index;
-            state.middle_column = state.level_zero.subservices[level_one].subservices[level_two];
+            let level_one_index = action.payload.level_one_index;
+            let level_two_index = action.payload.level_two_index;
+            state.middle_column = state.level_zero.subservices[level_one_index].subservices[level_two_index];
             return state;
             }
-          case AdvActions.TOGGLE_LEVEL_TWO: {
-            let level_one = action.payload.level_one_index;
-            let level_two = action.payload.level_two_index;
-            state.level_zero.subservices[level_one].subservices[level_two].active = !state.level_zero.subservices[level_one].subservices[level_two].active;
+
+          case AdvActions.ADD_LEVEL_TWO: {
+            let level_one_index = action.payload.level_one_index;
+            let level_two_index = action.payload.level_two_index;
+            let this_level_two = state.level_zero.subservices[level_one_index].subservices[level_two_index];
+            this_level_two.active = true;
+            this_level_two.sub_active = this_level_two.sub_count;
+            for (var lvl_three of this_level_two.subservices) {
+                lvl_three.active = true;
+            }
+            state.level_zero.subservices[level_one_index].subservices[level_two_index] = this_level_two;
             return state;
-          }
+            }
 
+          case AdvActions.REMOVE_LEVEL_TWO: {
+            let level_one_index = action.payload.level_one_index;
+            let level_two_index = action.payload.level_two_index;
+            let this_level_two = state.level_zero.subservices[level_one_index].subservices[level_two_index];
+            this_level_two.active = false;
+            this_level_two.sub_active = 0;
+            for (var lvl_three of this_level_two.subservices) {
+                lvl_three.active = false;
+            }
+            state.level_zero.subservices[level_one_index].subservices[level_two_index] = this_level_two;
+            return state;
+            }
 
+          case AdvActions.ADD_LEVEL_THREE: {
+            let level_one_index   = action.payload.level_one_index;
+            let level_two_index   = action.payload.level_two_index;
+            let level_three_index = action.payload.level_three_index;
+            let this_level_two = state.level_zero.subservices[level_one_index].subservices[level_two_index];
+            this_level_two.sub_active += 1
+            this_level_two.active = true;
+            this_level_two.subservices[level_three_index].active = true;
+            state.level_zero.subservices[level_one_index].subservices[level_two_index] = this_level_two;
+            return state;
+            }
+
+          case AdvActions.REMOVE_LEVEL_THREE: {
+            let level_one_index   = action.payload.level_one_index;
+            let level_two_index   = action.payload.level_two_index;
+            let level_three_index = action.payload.level_three_index;
+            let this_level_two = state.level_zero.subservices[level_one_index].subservices[level_two_index];
+            this_level_two.sub_active += -1
+            if (this_level_two.sub_active == 0) {
+              this_level_two.active = false;
+            }
+            this_level_two.subservices[level_three_index].active = false;
+            state.level_zero.subservices[level_one_index].subservices[level_two_index] = this_level_two;
+            return state;
+            }
 
           default: {return state;}
 
         }
 }
-
-//export const getActiveSubCount = (state: State) => state.level_two.sub_count;
-//export const getTotalSubCount  = (state: State) => state.level_two.sub_active;
