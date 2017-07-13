@@ -17,7 +17,7 @@ export const initialState: State = {
   level_zero: { subservices: [] },
   middle_column: {
     service_code: '',
-    service_name: '',
+    service_name: 'Please Select Services',
     active: false,
     subservices: [],
     sub_count: 0,

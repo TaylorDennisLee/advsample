@@ -30,17 +30,22 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(this.advActions.loadServJson());
+    //this.store.dispatch(this.advActions.switchCenter(0,0));
   }
 
-  switchMid(level_one_index: number, level_two_index: number) {
-    this.store.dispatch(this.advActions.switchCenter(level_one_index, level_two_index));
+  switchMid(level_two: LevelTwo) {
+    console.log("Switch Mid");
+    this.store.dispatch(this.advActions.switchCenter(level_two.level_one_index, level_two.level_two_index));
   }
 
   addLevelTwo(level_two: LevelTwo) {
+    console.log("Add Level Two");
+    //this.store.dispatch(this.advActions.switchCenter(level_two.level_one_index, level_two.level_two_index));
     this.store.dispatch(this.advActions.addLevelTwo(level_two.level_one_index, level_two.level_two_index));
   }
 
   removeLevelTwo(level_two: LevelTwo) {
+    //this.store.dispatch(this.advActions.switchCenter(level_two.level_one_index, level_two.level_two_index));
     this.store.dispatch(this.advActions.removeLevelTwo(level_two.level_one_index, level_two.level_two_index));
   }
 

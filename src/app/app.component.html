@@ -12,26 +12,26 @@
   </div>
 </div>
 <div class="ui divider"></div>
-<div class="ui grid">
+<div class="ui grid divided">
   <div class="four wide column">
     <sui-accordion class="styled fluid">
-      <ng-template ngFor let-levelone [ngForOf]="(top_level | async)?.subservices">
-        <sui-accordion-panel>
+      <ng-template ngFor let-f="first" let-levelone [ngForOf]="(top_level | async)?.subservices">
+        <sui-accordion-panel [isOpen]="f">
           <div title>
             <i class="dropdown icon"></i> {{levelone.service_name}}
           </div>
           <div content>
-            <div class="ui list middle aligned divided">
+            <div class="ui list middle aligned divided selection">
               <ng-template ngFor let-leveltwo [ngForOf]="levelone.subservices">
-                <div class="item">
+                <div class="item" (click)="switchMid(leveltwo)">
 
-                  <div *ngIf="leveltwo.active" class="left floated content">
+                  <div *ngIf="leveltwo.active" class="left floated">
                     <div (click)="removeLevelTwo(leveltwo)" class="circular ui icon button">
                       <i class="icon checkmark box"></i>
                     </div>
                   </div>
 
-                  <div *ngIf="!leveltwo.active" class="left floated content">
+                  <div *ngIf="!leveltwo.active" class="left floated">
                     <div (click)="addLevelTwo(leveltwo)" class="circular ui icon button basic">
                       <i class="icon square outline"></i>
                     </div>
@@ -40,8 +40,8 @@
 
 
 
-                  <div class="content">
-                    <a class="header" (click)="switchMid(leveltwo.level_one_index, leveltwo.level_two_index)">{{leveltwo.service_name}}</a>
+                  <div class="middle aligned content">
+                    <a class="header" >{{leveltwo.service_name}}</a>
                   </div>
                 </div>
               </ng-template>
@@ -52,17 +52,17 @@
     </sui-accordion>
   </div>
   <div class="seven wide column">
-    <div class="ui divided list">
+    <div class="ui celled list">
       <h3 class="ui header">{{(middle_column | async)?.service_name}}</h3>
       <div class="item" *ngFor="let subservice of (middle_column | async)?.subservices">
 
-        <div *ngIf="subservice.active" class="left floated content">
+        <div *ngIf="subservice.active" class="left floated ">
           <div (click)="removeLevelThree(subservice)" class="circular ui icon button">
             <i class="icon checkmark box"></i>
           </div>
         </div>
 
-        <div *ngIf="!subservice.active" class="left floated content">
+        <div *ngIf="!subservice.active" class="left floated ">
           <div (click)="addLevelThree(subservice)" class="circular ui icon button basic">
             <i class="icon square outline"></i>
           </div>
@@ -76,4 +76,25 @@
     </div>
   </div>
 
+  <div class="five wide column">
+    <div class="ui medium header">Selected Services:</div>
+    <div class="ui list">
+      <ng-template ngFor let-f="first" let-levelone [ngForOf]="(top_level | async)?.subservices">
+
+        <ng-template ngFor let-leveltwo [ngForOf]="levelone.subservices">
+          <div class="item" *ngIf="leveltwo.active">
+            <div class="header">
+              {{leveltwo.service_name}}
+            </div>
+            <div class="list" *ngIf="leveltwo.sub_active != leveltwo.sub_count">
+              <ng-template ngFor let-levelthree [ngForOf]="leveltwo.subservices">
+                <div *ngIf="levelthree.active" class="item">{{levelthree.service_name}}</div>
+              </ng-template>
+            </div>
+
+          </div>
+        </ng-template>
+      </ng-template>
+    </div>
+  </div>
 </div>

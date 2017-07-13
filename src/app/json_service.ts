@@ -10,7 +10,7 @@ export class JsonService {
 
 
     getTopLevel(): Observable<LevelZero> {
-        return this.http.get('/assets/serv-2.json')
+        return this.http.get('assets/serv-2.json')
         .map(res => res.json());
     }
 
